@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Error | Java Currency Converter</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<h3>Oops! Something went wrong. Please contact maintenance team.</h3>
+		<table class="table table-bordered">
+			<tr>
+				<td>DATE</td>
+				<td th:text="${timestamp}"></td>
+			</tr>
+
+			<tr>
+				<td>status</td>
+				<td th:text="${status}"></td>
+			</tr>
+
+			<tr>
+				<td>error</td>
+				<td th:text="${error}"></td>
+			</tr>
+
+			<tr>
+				<td>path</td>
+				<td th:text="${path}"></td>
+			</tr>
+
+			<tr>
+				<td>Trace</td>
+				<td th:text="${trace}"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
