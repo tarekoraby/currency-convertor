@@ -75,7 +75,7 @@ public class CurrencyService {
         try {
             latestRates = getLatestRates();
         } catch (RestClientResponseException | ResourceAccessException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
             throw new LatestRatesRetrievalException(
                     "An error occured during retreival of latest rates data from remote API");
         }
