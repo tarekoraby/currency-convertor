@@ -31,22 +31,42 @@ public final class LatestRates {
         this.rates = rates;
     }
 
+    /**
+     * @return true or false depending on whether or not the API request has
+     *         succeeded
+     */
     public boolean isSuccess() {
         return success;
     }
 
+    /**
+     * @return the exact date and time (UNIX time stamp) the given rates were
+     *         collected
+     */
     public long getTimestamp() {
         return timestamp;
     }
 
+    /**
+     * @return the three-letter currency code of the base currency for which the
+     *         conversion rates are provided
+     */
     public String getBase() {
         return base;
     }
 
+    /**
+     * @return the current date
+     */
     public LocalDate getDate() {
         return date;
     }
 
+    /**
+     * @return a copy of the conversion rates, which is a map of the
+     *         three-letter currency codes and their rates relative to the
+     *         {@code base} currency
+     */
     public Map<String, BigDecimal> getRates() {
         // return a defensive copy
         return new LinkedHashMap<>(rates);
