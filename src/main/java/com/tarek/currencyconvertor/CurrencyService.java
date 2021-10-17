@@ -67,16 +67,17 @@ public class CurrencyService {
      * @return the conversion result
      */
     public ConversionResult convert(String from, String to, BigDecimal amount) {
+        var startTime = System.nanoTime();
         checkArgsSyntaticValidity(from, to, amount);
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
             return createConversionResult(from, to, amount,
                     Instant.now().getEpochSecond(), BigDecimal.ONE,
-                    BigDecimal.ZERO);
+                    BigDecimal.ZERO, startTime);
         }
         if (from.equals(to)) {
             return createConversionResult(from, to, amount,
                     Instant.now().getEpochSecond(), BigDecimal.ONE,
-                    amount);
+                    amount, startTime);
         }
 
         LatestRates latestRates;
@@ -95,12 +96,12 @@ public class CurrencyService {
         var result = amount.multiply(sourceToTagretRate,
                 AppConstants.MATH_CONTEXT);
         return createConversionResult(from, to, amount, latestRates.getTimestamp(),
-                sourceToTagretRate, result);
+                sourceToTagretRate, result, startTime);
     }
 
     private ConversionResult createConversionResult(String from, String to,
             BigDecimal amount, long timestamp, BigDecimal sourceToTagretRate,
-            BigDecimal result) {
+            BigDecimal result, long startTime) {
         var conversionResult = new ConversionResult();
         conversionResult.setSuccess(true);
         conversionResult.setFrom(from);
@@ -109,6 +110,8 @@ public class CurrencyService {
         conversionResult.setRate(sourceToTagretRate);
         conversionResult.setResult(result);
         conversionResult.setTimestamp(timestamp);
+        conversionResult
+                .setExecutionTime((System.nanoTime() - startTime) / 1000000);
         return conversionResult;
     }
 

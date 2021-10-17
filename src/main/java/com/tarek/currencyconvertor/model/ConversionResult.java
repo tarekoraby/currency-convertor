@@ -11,6 +11,7 @@ public class ConversionResult {
 
     private boolean success;
     private long timestamp;
+    private long executionTime;
     private String from;
     private String to;
     private BigDecimal amount;
@@ -31,6 +32,14 @@ public class ConversionResult {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public long getExecutionTime() {
+        return executionTime;
+    }
+
+    public void setExecutionTime(long milliseconds) {
+        executionTime = milliseconds;
     }
 
     public String getFrom() {
@@ -75,7 +84,8 @@ public class ConversionResult {
 
     @Override
     public int hashCode() {
-        return Objects.hash(amount, from, rate, result, success, timestamp, to);
+        return Objects.hash(amount, executionTime, from, rate, result, success,
+                timestamp, to);
     }
 
     @Override
@@ -91,6 +101,7 @@ public class ConversionResult {
         }
         var other = (ConversionResult) obj;
         return Objects.equals(amount, other.amount)
+                && (executionTime == other.executionTime)
                 && Objects.equals(from, other.from)
                 && Objects.equals(rate, other.rate)
                 && Objects.equals(result, other.result)
@@ -102,7 +113,8 @@ public class ConversionResult {
     public String toString() {
         return "ConversionResult [success=" + success + ", timestamp="
                 + timestamp + ", from=" + from + ", to=" + to + ", amount="
-                + amount + ", rate=" + rate + ", result=" + result + "]";
+                + amount + ", rate=" + rate + ", result=" + result
+                + ", executionTime=" + executionTime + "]";
     }
 
 }
