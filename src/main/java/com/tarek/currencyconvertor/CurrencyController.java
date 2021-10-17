@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tarek.currencyconvertor.model.ConversionResult;
+
 @Validated
 @RestController
 public class CurrencyController {
@@ -35,7 +37,7 @@ public class CurrencyController {
      * @return the conversion result
      */
     @GetMapping("/v1/converter")
-    public BigDecimal converter(
+    public ConversionResult converter(
             @RequestParam @Size(min = 3, max = 3) @NotBlank String from,
             @RequestParam @Size(min = 3, max = 3) @NotBlank String to,
             @RequestParam @DecimalMin("0") BigDecimal amount) {

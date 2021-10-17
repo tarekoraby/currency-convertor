@@ -1,6 +1,7 @@
 package com.tarek.currencyconvertor;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.HashSet;
 
 import org.slf4j.Logger;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
+
+import com.tarek.currencyconvertor.model.ConversionResult;
+import com.tarek.currencyconvertor.model.LatestRates;
 
 @Service
 public class CurrencyService {
@@ -62,13 +66,17 @@ public class CurrencyService {
      *
      * @return the conversion result
      */
-    public BigDecimal convert(String from, String to, BigDecimal amount) {
+    public ConversionResult convert(String from, String to, BigDecimal amount) {
         checkArgsSyntaticValidity(from, to, amount);
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
-            return BigDecimal.ZERO;
+            return createConversionResult(from, to, amount,
+                    Instant.now().getEpochSecond(), BigDecimal.ONE,
+                    BigDecimal.ZERO);
         }
         if (from.equals(to)) {
-            return amount;
+            return createConversionResult(from, to, amount,
+                    Instant.now().getEpochSecond(), BigDecimal.ONE,
+                    amount);
         }
 
         LatestRates latestRates;
@@ -84,7 +92,24 @@ public class CurrencyService {
         checkSymbolsValidity(latestRates, from, to);
 
         var sourceToTagretRate = getSourceToTargetRate(from, to, latestRates);
-        return amount.multiply(sourceToTagretRate, AppConstants.MATH_CONTEXT);
+        var result = amount.multiply(sourceToTagretRate,
+                AppConstants.MATH_CONTEXT);
+        return createConversionResult(from, to, amount, latestRates.getTimestamp(),
+                sourceToTagretRate, result);
+    }
+
+    private ConversionResult createConversionResult(String from, String to,
+            BigDecimal amount, long timestamp, BigDecimal sourceToTagretRate,
+            BigDecimal result) {
+        var conversionResult = new ConversionResult();
+        conversionResult.setSuccess(true);
+        conversionResult.setFrom(from);
+        conversionResult.setTo(to);
+        conversionResult.setAmount(amount);
+        conversionResult.setRate(sourceToTagretRate);
+        conversionResult.setResult(result);
+        conversionResult.setTimestamp(timestamp);
+        return conversionResult;
     }
 
     private LatestRates getLatestRates() {

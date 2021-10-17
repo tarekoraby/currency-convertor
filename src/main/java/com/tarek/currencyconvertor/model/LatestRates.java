@@ -1,4 +1,4 @@
-package com.tarek.currencyconvertor;
+package com.tarek.currencyconvertor.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
