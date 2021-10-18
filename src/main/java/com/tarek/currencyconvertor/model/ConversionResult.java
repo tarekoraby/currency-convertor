@@ -1,8 +1,9 @@
 package com.tarek.currencyconvertor.model;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Objects;
+
+import com.tarek.currencyconvertor.AppConstants;
 
 /**
  * The result of a currency conversion
@@ -71,11 +72,13 @@ public class ConversionResult {
     }
 
     public void setRate(BigDecimal rate) {
-        this.rate = rate.setScale(6, RoundingMode.HALF_UP);
+        this.rate = rate.setScale(AppConstants.BIGDECIMAL_SCALE,
+                AppConstants.ROUNDING_MODE);
     }
 
     public BigDecimal getResult() {
-        return result.setScale(6, RoundingMode.HALF_UP);
+        return result.setScale(AppConstants.BIGDECIMAL_SCALE,
+                AppConstants.ROUNDING_MODE);
     }
 
     public void setResult(BigDecimal result) {

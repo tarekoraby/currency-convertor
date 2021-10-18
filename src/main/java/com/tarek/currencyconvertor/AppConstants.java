@@ -1,6 +1,7 @@
 package com.tarek.currencyconvertor;
 
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.net.URI;
 
 public class AppConstants {
@@ -11,5 +12,6 @@ public class AppConstants {
             .create(EXCHANGERATESAPI_LATEST_URL_BASE + ACCESS_KEY);
 
     public static final MathContext MATH_CONTEXT = MathContext.DECIMAL128;
-
+    public static final int BIGDECIMAL_SCALE = 6;
+    public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
 }
