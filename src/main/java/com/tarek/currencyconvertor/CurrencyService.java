@@ -76,8 +76,8 @@ public class CurrencyService {
         }
         if (from.equals(to)) {
             return createConversionResult(from, to, amount,
-                    Instant.now().getEpochSecond(), BigDecimal.ONE,
-                    amount, startTime);
+                    Instant.now().getEpochSecond(), BigDecimal.ONE, amount,
+                    startTime);
         }
 
         LatestRates latestRates;
@@ -95,8 +95,9 @@ public class CurrencyService {
         var sourceToTagretRate = getSourceToTargetRate(from, to, latestRates);
         var result = amount.multiply(sourceToTagretRate,
                 AppConstants.MATH_CONTEXT);
-        return createConversionResult(from, to, amount, latestRates.getTimestamp(),
-                sourceToTagretRate, result, startTime);
+        return createConversionResult(from, to, amount,
+                latestRates.getTimestamp(), sourceToTagretRate, result,
+                startTime);
     }
 
     private ConversionResult createConversionResult(String from, String to,
