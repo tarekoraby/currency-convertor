@@ -36,7 +36,7 @@ public class CurrencyController {
      *            The amount to be converted
      * @return the conversion result
      */
-    @GetMapping("/v1/converter")
+    @GetMapping({ "/v1/converter", "/" })
     public ConversionResult converter(
             @RequestParam @Size(min = 3, max = 3) @NotBlank String from,
             @RequestParam @Size(min = 3, max = 3) @NotBlank String to,
